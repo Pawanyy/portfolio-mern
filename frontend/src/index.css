@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* tableStyles.css */
+.table-custom {
+  @apply min-w-full divide-y-2 divide-gray-200 bg-white text-sm dark:divide-gray-700 dark:bg-gray-900;
+  max-width: 100%; /* Ensure the table does not exceed the container's width */
+  overflow: hidden; /* Prevent overflow */
+}
+
+.table-custom thead {
+  @apply text-left;
+}
+  
+.table-custom thead tr th {
+  @apply whitespace-nowrap px-4 py-2 font-medium text-gray-900 dark:text-white;
+}
+  
+.table-custom tbody {
+  @apply divide-y divide-gray-200 dark:divide-gray-700;
+}
+  
+.table-custom tbody tr {
+  @apply odd:bg-gray-50 dark:odd:bg-gray-800/50;
+}
+
+.table-custom tbody td {
+  @apply  px-4 py-2 font-medium text-gray-900 dark:text-white;
+}
