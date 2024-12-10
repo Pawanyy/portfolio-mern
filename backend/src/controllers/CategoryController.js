@@ -13,9 +13,9 @@ export default class CategoryController extends BaseController {
         const { id } = req.params;
         const category = await CategoryModel.findById(id);
 
-        if (!category) return res.json(createResponse({
-            success: true,
-            statusCode: 200,
+        if (!category) return res.status(404).json(createResponse({
+            success: false,
+            statusCode: 404,
             message: "Category not Found!"
         }));
 
@@ -51,7 +51,7 @@ export default class CategoryController extends BaseController {
         const { name, slug } = req.body;
 
         if (!categoryId) {
-            return res.json(createResponse({
+            return res.status(400).json(createResponse({
                 success: false,
                 statusCode: 400,
                 message: "Category ID is required to update the category."
@@ -68,7 +68,7 @@ export default class CategoryController extends BaseController {
 
         if (categoryExist) {
             const existSub = categoryExist.name.toLowerCase() === name.toLowerCase() ? "Name" : "Slug";
-            return res.json(createResponse({
+            return res.status(400).json(createResponse({
                 success: false,
                 statusCode: 400,
                 message: `Category ${existSub} Already Exist!`
@@ -82,7 +82,7 @@ export default class CategoryController extends BaseController {
         );
 
         if (!updatedCategory) {
-            return res.json(createResponse({
+            return res.status(404).json(createResponse({
                 success: false,
                 statusCode: 404,
                 message: "Category not found!"
@@ -111,7 +111,7 @@ export default class CategoryController extends BaseController {
         );
         if (categoryExist) {
             const existSub = categoryExist.name.toLowerCase() == name.toLowerCase() ? "Name" : "Slug";
-            return res.json(createResponse({
+            return res.status(400).json(createResponse({
                 success: false,
                 statusCode: 400,
                 message: `Category ${existSub} Exist!`,
@@ -130,9 +130,9 @@ export default class CategoryController extends BaseController {
     async delete(req, res) {
         const { id } = req.params;
         const category = await CategoryModel.findByIdAndDelete(id);
-        if (!category) return res.json(createResponse({
+        if (!category) return res.status(404).json(createResponse({
             success: false,
-            statusCode: 400,
+            statusCode: 404,
             message: "Category Not Found!",
         }))
 

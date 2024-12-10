@@ -13,9 +13,9 @@ export default class TagController extends BaseController {
         const { id } = req.params;
         const tag = await TagModel.findById(id);
 
-        if (!tag) return res.json(createResponse({
-            success: true,
-            statusCode: 200,
+        if (!tag) return res.status(404).json(createResponse({
+            success: false,
+            statusCode: 404,
             message: "Tag not Found!"
         }));
 
@@ -51,7 +51,7 @@ export default class TagController extends BaseController {
         const { name, slug } = req.body;
 
         if (!tagId) {
-            return res.json(createResponse({
+            return res.status(400).json(createResponse({
                 success: false,
                 statusCode: 400,
                 message: "Tag ID is required to update the tag."
@@ -68,7 +68,7 @@ export default class TagController extends BaseController {
 
         if (tagExist) {
             const existSub = tagExist.name.toLowerCase() === name.toLowerCase() ? "Name" : "Slug";
-            return res.json(createResponse({
+            return res.status(400).json(createResponse({
                 success: false,
                 statusCode: 400,
                 message: `Tag ${existSub} Already Exist!`
@@ -82,7 +82,7 @@ export default class TagController extends BaseController {
         );
 
         if (!updatedTag) {
-            return res.json(createResponse({
+            return res.status(404).json(createResponse({
                 success: false,
                 statusCode: 404,
                 message: "Tag not found!"
@@ -114,7 +114,7 @@ export default class TagController extends BaseController {
 
         if (tagExist) {
             const existSub = tagExist.name.toLowerCase() == name.toLowerCase() ? "Name" : "Slug";
-            return res.json(createResponse({
+            return res.status(400).json(createResponse({
                 success: false,
                 statusCode: 400,
                 message: `Tag ${existSub} Exist!`,
@@ -137,9 +137,9 @@ export default class TagController extends BaseController {
     async delete(req, res) {
         const { id } = req.params;
         const tag = await TagModel.findByIdAndDelete(id);
-        if (!tag) return res.json(createResponse({
+        if (!tag) return res.status(404).json(createResponse({
             success: false,
-            statusCode: 400,
+            statusCode: 404,
             message: "Tag Not Found!",
         }))
 
