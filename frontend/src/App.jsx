@@ -11,6 +11,7 @@ import PostsPage from "./pages/admin/PostsPage";
 import PortfolioPage from "./pages/admin/PortfolioPage";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
+import SettingsPage from "./pages/admin/SettingsPage.jsx";
 
 function App() {
   return (
@@ -29,7 +30,7 @@ function App() {
               <Route path="portfolio" element={<PortfolioPage />} />
               <Route path="resume" element={<>Hi</>} />
               <Route path="contact" element={<ContactPage />} />
-              <Route path="settings" element={<>Hi</>} />
+              <Route path="settings" element={<SettingsPage />} />
               <Route path="builds" element={<>Hi</>} />
             </Route>
           </Route>

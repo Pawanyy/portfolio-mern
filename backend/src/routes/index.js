@@ -9,6 +9,7 @@ const authController = container.resolve("authController");
 const tagController = container.resolve("tagController");
 const categoryController = container.resolve("categoryController");
 const contactController = container.resolve("contactController");
+const settingController = container.resolve("settingController");
 
 const router = Router();
 
@@ -36,5 +37,8 @@ router.delete('/category/:id', authenticate, categoryController.delete.bind(cate
 
 router.post('/contact', contactRateLimiter, contactController.create.bind(contactController));
 router.get('/contact', authenticate, contactController.getAll.bind(contactController));
+
+router.post('/settings', authenticate, settingController.createUpdate.bind(settingController));
+router.get('/settings', authenticate, settingController.get.bind(settingController));
 
 export default router;
