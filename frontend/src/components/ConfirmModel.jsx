@@ -1,16 +1,13 @@
 import { X } from "lucide-react";
 
 export default function ConfirmModal({
-  isOpen,
   onClose,
   onConfirm,
-  title,
+  title = "Delete",
   message,
   confirmText = "Confirm",
   cancelText = "Cancel",
 }) {
-  if (!isOpen) return null;
-
   return (
     <div
       role="alert"
