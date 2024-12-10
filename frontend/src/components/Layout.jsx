@@ -1,4 +1,4 @@
-import AppSidebar from "@/components/AppSidebar";
+import AppSidebar from "./AppSidebar";
 import { Outlet } from "react-router-dom"
 import { Moon, Sun } from "lucide-react";
 import { toggleTheme } from "../store/themeSlice.js"
