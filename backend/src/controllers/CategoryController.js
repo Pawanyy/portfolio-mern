@@ -45,6 +45,58 @@ export default class CategoryController extends BaseController {
         }))
     }
 
+    async update(req, res) {
+
+        const { id: categoryId } = req.params;
+        const { name, slug } = req.body;
+
+        if (!categoryId) {
+            return res.json(createResponse({
+                success: false,
+                statusCode: 400,
+                message: "Category ID is required to update the category."
+            }));
+        }
+
+        const categoryExist = await CategoryModel.findOne({
+            $or: [
+                { name },
+                { slug }
+            ],
+            _id: { $ne: categoryId }
+        });
+
+        if (categoryExist) {
+            const existSub = categoryExist.name.toLowerCase() === name.toLowerCase() ? "Name" : "Slug";
+            return res.json(createResponse({
+                success: false,
+                statusCode: 400,
+                message: `Category ${existSub} Already Exist!`
+            }));
+        }
+
+        const updatedCategory = await CategoryModel.findByIdAndUpdate(
+            categoryId,
+            { name, slug },
+            { new: true }
+        );
+
+        if (!updatedCategory) {
+            return res.json(createResponse({
+                success: false,
+                statusCode: 404,
+                message: "Category not found!"
+            }));
+        }
+
+        return res.json(createResponse({
+            success: true,
+            statusCode: 200,
+            message: "Category updated successfully!",
+            data: updatedCategory
+        }));
+    }
+
     async create(req, res) {
         const { name, slug } = req.body;
         const categoryExist = await CategoryModel.findOne(

@@ -17,11 +17,13 @@ router.get("/auth/logout", authController.logout.bind(authController));
 router.get('/tag', authenticate, tagController.getAll.bind(tagController));
 router.get('/tag/:id', authenticate, tagController.get.bind(tagController));
 router.post('/tag', authenticate, tagController.create.bind(tagController));
+router.patch('/tag/:id', authenticate, tagController.update.bind(tagController));
 router.delete('/tag/:id', authenticate, tagController.delete.bind(tagController));
 
 router.get('/category', authenticate, categoryController.getAll.bind(categoryController));
 router.get('/category/:id', authenticate, categoryController.get.bind(categoryController));
 router.post('/category', authenticate, categoryController.create.bind(categoryController));
+router.patch('/category/:id', authenticate, categoryController.update.bind(categoryController));
 router.delete('/category/:id', authenticate, categoryController.delete.bind(categoryController));
 
 export default router;

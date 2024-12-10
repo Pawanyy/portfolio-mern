@@ -45,6 +45,58 @@ export default class TagController extends BaseController {
         }))
     }
 
+    async update(req, res) {
+
+        const { id: tagId } = req.params;
+        const { name, slug } = req.body;
+
+        if (!tagId) {
+            return res.json(createResponse({
+                success: false,
+                statusCode: 400,
+                message: "Tag ID is required to update the tag."
+            }));
+        }
+
+        const tagExist = await TagModel.findOne({
+            $or: [
+                { name },
+                { slug }
+            ],
+            _id: { $ne: tagId }
+        });
+
+        if (tagExist) {
+            const existSub = tagExist.name.toLowerCase() === name.toLowerCase() ? "Name" : "Slug";
+            return res.json(createResponse({
+                success: false,
+                statusCode: 400,
+                message: `Tag ${existSub} Already Exist!`
+            }));
+        }
+
+        const updatedTag = await TagModel.findByIdAndUpdate(
+            tagId,
+            { name, slug },
+            { new: true }
+        );
+
+        if (!updatedTag) {
+            return res.json(createResponse({
+                success: false,
+                statusCode: 404,
+                message: "Tag not found!"
+            }));
+        }
+
+        return res.json(createResponse({
+            success: true,
+            statusCode: 200,
+            message: "Tag updated successfully!",
+            data: updatedTag
+        }));
+    }
+
     async create(req, res) {
 
         const { name, slug } = req.body;
