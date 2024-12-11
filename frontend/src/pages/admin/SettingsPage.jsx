@@ -45,16 +45,12 @@ export default function SettingsPage() {
   const onSubmit = async (data) => {
     try {
       setLoading(true);
-      const response = await axios.post(
-        `${constant.API_URL}/settings`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${tokenDetails.authToken}`,
-          },
+      const response = await axios.post(`${constant.API_URL}/settings`, data, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${tokenDetails.authToken}`,
         },
-        data
-      );
+      });
       reset(response.data.data);
     } catch (error) {
       setErrorMessage("Error updating Settings");
@@ -67,7 +63,7 @@ export default function SettingsPage() {
     <div>
       <div className="px-4 space-y-4">
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="flex justify-between">
+          <div className="flex justify-between mb-4">
             <h1 className=" text-4xl tracking-tight font-extrabold text-gray-800 dark:text-white">
               Settings
             </h1>
@@ -76,7 +72,6 @@ export default function SettingsPage() {
               className="bg-blue-500 px-4 py-2 rounded-md text-white hover:bg-blue-700"
               type="submit"
               disabled={loading}
-              onClick={() => setLoading(true)}
             >
               {loading ? "Loading..." : "Save"}
             </button>
@@ -89,23 +84,23 @@ export default function SettingsPage() {
               <Spinner />
             </div>
           ) : (
-            <div className="overflow-x-auto bg-white p-4 rounded-lg border border-gray-200 dark:border-gray-700">
+            <div className="overflow-x-auto bg-white mt-4 p-4 rounded-lg border border-gray-200 dark:border-gray-700">
               <h2 className="mb-4 text-lg font-bold">Site Details</h2>
               <div className="mb-4">
                 <label
-                  htmlFor="favicon"
+                  htmlFor="faviconFile"
                   className="block text-gray-700 font-medium mb-2"
                 >
                   Favicon
                 </label>
                 <input
                   type="file"
-                  id="favicon"
-                  name="favicon"
+                  id="faviconFile"
+                  name="faviconFile"
                   accept="image/x-icon,image/png"
                   className="block w-full border rounded-lg px-3 py-2"
-                  {...register("favicon")}
                 />
+                <input type="hidden" name="favicon" {...register("favicon")} />
               </div>
               <div className="mb-4">
                 <label
